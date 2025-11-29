@@ -40,7 +40,7 @@ def rref_(A):
 
     for k in reversed(range(R)):
         # find pivot
-        for p in range(k, R):
+        for p in range(k, C):
             if A[k][p] != 0:
                 break
         if A[k][p] == 0:
