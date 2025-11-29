@@ -1,4 +1,7 @@
-def read_matrix():
+from fractions import Fraction
+
+
+def read_matrix(*, exact):
     print('Enter matrix, whitespace separated, enter twice to finish:')
     last = -1
     mat = []
@@ -12,6 +15,14 @@ def read_matrix():
             mat.append(line)
     except EOFError:
         pass
+
+    if exact:
+        R = len(mat)
+        C = len(mat[0])
+        for i in range(R):
+            for j in range(C):
+                mat[i][j] = Fraction(mat[i][j])
+
     return mat
 
 

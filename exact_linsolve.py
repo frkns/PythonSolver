@@ -1,13 +1,6 @@
-from fractions import Fraction
+from sol_enum import Sol
 from matrix_IO import *
 from copy import deepcopy
-from enum import Enum
-
-
-class Sol(Enum):
-    NONE = 0
-    UNIQUE = 1
-    INFINITE = 2
 
 
 def ref_(A):
@@ -59,10 +52,6 @@ def rref_(A):
                 A[i][j] -= factor * A[k][j]
 
 
-def sol_type_(A):
-    rref_(A)
-
-
 def do_with_copy(f):
     def g(A, *a, **k):
         B = deepcopy(A)
@@ -73,22 +62,38 @@ def do_with_copy(f):
 
 ref = do_with_copy(ref_)
 rref = do_with_copy(rref_)
-sol_type = do_with_copy(sol_type_)
 
 
-matrix = read_matrix()
-print_matrix(matrix)
+def sol_type(A):
+    rref(A)
+    R = len(A)
+    C = len(A[0])
 
-R = len(matrix)
-C = len(matrix[0])
-for i in range(R):
-    for j in range(C):
-        matrix[i][j] = Fraction(matrix[i][j])
+    zero_row = False
+    for i in range(R):
+        if all(x == 0 for x in A[i][:-1]):
+            zero_row = True
+            if A[i][-1] != 0:
+                return Sol.NONE
+
+    return Sol.INFINITE if zero_row else Sol.UNIQUE
+
+
+M = read_matrix(exact=True)
+print_matrix(M)
+
+
+nature = sol_type(M)
+print()
+print('Status:')
+match nature:
+    case Sol.NONE:
+        print('    there are no solutions')
+    case Sol.UNIQUE:
+        print('    there is a unique solution')
+    case Sol.INFINITE:
+        print('    there are infinite solutions')
 
 print()
 print('RREF:')
-print_matrix(rref(matrix))
-
-print()
-print('REF:')
-print_matrix(ref(matrix))
+print_matrix(rref(M))
