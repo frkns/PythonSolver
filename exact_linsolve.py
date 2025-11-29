@@ -65,7 +65,7 @@ rref = do_with_copy(rref_)
 
 
 def sol_type(A):
-    rref(A)
+    A = rref(A)
     R = len(A)
     C = len(A[0])
 

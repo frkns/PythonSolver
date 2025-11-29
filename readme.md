@@ -17,14 +17,13 @@ Matrix:
   9  10  11  12
 
 Status:
-    UNIQUE solution
+    INFINITE solutions
 
-Solution:
+One solution:
     ( -2 3 0 )
 
 RREF:
   1   0  -1  -2
   0   1   2   3
   0   0   0   0
-
 ```
