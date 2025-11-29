@@ -1,5 +1,6 @@
 from fractions import Fraction
 from matrix_IO import *
+from copy import deepcopy
 
 
 def ref_(A):
@@ -44,6 +45,18 @@ def rref_(A):
             A[i][k] = 0
 
 
+def ref(A):
+    B = deepcopy(A)
+    ref_(B)
+    return B
+
+
+def rref(A):
+    B = deepcopy(A)
+    rref_(B)
+    return B
+
+
 matrix = read_matrix()
 print_matrix(matrix)
 
@@ -55,10 +68,8 @@ for i in range(R):
 
 print()
 print('RREF:')
-rref_(matrix)
-print_matrix(matrix)
+print_matrix(rref(matrix))
 
 print()
 print('REF:')
-ref_(matrix)
-print_matrix(matrix)
+print_matrix(ref(matrix))
