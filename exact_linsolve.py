@@ -39,28 +39,24 @@ def rref_(A):
     C = len(A[0])
 
     for k in reversed(range(R)):
-        if A[k][k] == 0:
+        # find pivot
+        for p in range(k, R):
+            if A[k][p] != 0:
+                break
+        if A[k][p] == 0:
             continue
 
         # normalize this row
-        for j in reversed(range(k, C)):
-            A[k][j] /= A[k][k]
+        for j in reversed(range(p, C)):
+            A[k][j] /= A[k][p]
 
         # eliminate rows above
         for i in range(k):
-            factor = A[i][k]
+            factor = A[i][p]
             if factor == 0:
                 continue
-            for j in range(k, C):
+            for j in range(p, C):
                 A[i][j] -= factor * A[k][j]
-
-    # renormalize all rows
-    for i in range(R):
-        for j in range(C):
-            if A[i][j] != 0:
-                for k in reversed(range(j, C)):
-                    A[i][k] /= A[i][j]
-                break
 
 
 def sol_type_(A):
@@ -92,3 +88,7 @@ for i in range(R):
 print()
 print('RREF:')
 print_matrix(rref(matrix))
+
+print()
+print('REF:')
+print_matrix(ref(matrix))
