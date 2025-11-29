@@ -1,6 +1,13 @@
 from fractions import Fraction
 from matrix_IO import *
 from copy import deepcopy
+from enum import Enum
+
+
+class Sol(Enum):
+    NONE = 0
+    UNIQUE = 1
+    INFINITE = 2
 
 
 def ref_(A):
@@ -34,27 +41,43 @@ def rref_(A):
     for k in reversed(range(R)):
         if A[k][k] == 0:
             continue
-        A[k][k+1] /= A[k][k]
-        A[k][k] = 1
+
+        # normalize this row
+        for j in reversed(range(k, C)):
+            A[k][j] /= A[k][k]
 
         # eliminate rows above
         for i in range(k):
-            if A[i][k] == 0:
+            factor = A[i][k]
+            if factor == 0:
                 continue
-            A[i][k+1] -= A[i][k] * A[k][k+1]
-            A[i][k] = 0
+            for j in range(k, C):
+                A[i][j] -= factor * A[k][j]
+
+    # # renormalize all rows
+    # for i in range(R):
+    #     for j in range(C):
+    #         if A[i][j] != 0:
+    #             for k in reversed(range(j, C)):
+    #                 A[i][k] /= A[i][j]
+    #             break
 
 
-def ref(A):
-    B = deepcopy(A)
-    ref_(B)
-    return B
+def sol_type_(A):
+    rref_(A)
 
 
-def rref(A):
-    B = deepcopy(A)
-    rref_(B)
-    return B
+def do_with_copy(f):
+    def g(A, *a, **k):
+        B = deepcopy(A)
+        f(B, *a, **k)
+        return B
+    return g
+
+
+ref = do_with_copy(ref_)
+rref = do_with_copy(rref_)
+sol_type = do_with_copy(sol_type_)
 
 
 matrix = read_matrix()
@@ -69,7 +92,3 @@ for i in range(R):
 print()
 print('RREF:')
 print_matrix(rref(matrix))
-
-print()
-print('REF:')
-print_matrix(ref(matrix))
