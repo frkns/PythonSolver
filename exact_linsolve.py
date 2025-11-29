@@ -86,13 +86,14 @@ def linsolve(A):
     sol = [0] * (C-1)
     for j in range(C-1):
         for i in range(R):
-            if A[i][j] != 0:
-                assert A[i][j] == 1
+            if A[i][j] == 1:
                 sol[j] = A[i][-1]
     return sol
 
 
 M = read_matrix(exact=True)
+
+print('Matrix:')
 print_matrix(M)
 
 
@@ -111,7 +112,7 @@ match nature:
 if nature == Sol.UNIQUE:
     sol = linsolve(M)
     print()
-    print('The solution:')
+    print('Solution:')
     print('    (', *sol, ')')
 
 if nature == Sol.INFINITE:
@@ -124,4 +125,3 @@ if nature == Sol.INFINITE:
 print()
 print('RREF:')
 print_matrix(rref(M))
-

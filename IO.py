@@ -2,7 +2,7 @@ from fractions import Fraction
 
 
 def read_matrix(*, exact):
-    print("Enter matrix, whitespace separated, then 'enter' twice to finish:")
+    print("Enter augmented matrix, whitespace separated, then 'enter' twice to finish:")
     last = -1
     mat = []
     try:
