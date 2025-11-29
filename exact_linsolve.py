@@ -54,13 +54,13 @@ def rref_(A):
             for j in range(k, C):
                 A[i][j] -= factor * A[k][j]
 
-    # # renormalize all rows
-    # for i in range(R):
-    #     for j in range(C):
-    #         if A[i][j] != 0:
-    #             for k in reversed(range(j, C)):
-    #                 A[i][k] /= A[i][j]
-    #             break
+    # renormalize all rows
+    for i in range(R):
+        for j in range(C):
+            if A[i][j] != 0:
+                for k in reversed(range(j, C)):
+                    A[i][k] /= A[i][j]
+                break
 
 
 def sol_type_(A):
