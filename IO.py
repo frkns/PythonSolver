@@ -2,7 +2,7 @@ from fractions import Fraction
 
 
 def read_matrix(*, exact):
-    print('Enter matrix, whitespace separated, enter twice to finish:')
+    print("Enter matrix, whitespace separated, then 'enter' twice to finish:")
     last = -1
     mat = []
     try:
@@ -40,6 +40,18 @@ def print_matrix(A):
     width = max(len(x) for row in S for x in row)
     width += width // 2
 
-    first = True
     for row in S:
         print(' '.join(x.rjust(width) for x in row))
+
+
+def print_vec(v):
+    S = []
+    for x in v:
+        if isinstance(x, float):
+            S.append(f'{x:.1f}')
+        else:
+            S.append(str(x))
+    width = max(len(x) for x in S)
+    width += width // 2
+    print(' '.join(x.rjust(width) for x in S))
+

@@ -1,5 +1,5 @@
 from sol_enum import Sol
-from matrix_IO import *
+from IO import *
 from copy import deepcopy
 
 
@@ -75,8 +75,21 @@ def sol_type(A):
             zero_row = True
             if A[i][-1] != 0:
                 return Sol.NONE
-
     return Sol.INFINITE if zero_row else Sol.UNIQUE
+
+
+def linsolve(A):
+    A = rref(A)
+    R = len(A)
+    C = len(A[0])
+
+    sol = [0] * (C-1)
+    for j in range(C-1):
+        for i in range(R):
+            if A[i][j] != 0:
+                assert A[i][j] == 1
+                sol[j] = A[i][-1]
+    return sol
 
 
 M = read_matrix(exact=True)
@@ -88,12 +101,27 @@ print()
 print('Status:')
 match nature:
     case Sol.NONE:
-        print('    there are no solutions')
+        print('    NO solutions')
     case Sol.UNIQUE:
-        print('    there is a unique solution')
+        print('    UNIQUE solution')
     case Sol.INFINITE:
-        print('    there are infinite solutions')
+        print('    INFINITE solutions')
+
+
+if nature == Sol.UNIQUE:
+    sol = linsolve(M)
+    print()
+    print('The solution:')
+    print('    (', *sol, ')')
+
+if nature == Sol.INFINITE:
+    sol = linsolve(M)
+    print()
+    print('One solution:')
+    print('    (', *sol, ')')
+
 
 print()
 print('RREF:')
 print_matrix(rref(M))
+
