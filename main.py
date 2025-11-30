@@ -1,1 +1,1 @@
-import exact_linsolve
+__import__('exact_linsolve').main()

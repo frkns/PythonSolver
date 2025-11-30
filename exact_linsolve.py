@@ -91,37 +91,38 @@ def linsolve(A):
     return sol
 
 
-M = read_matrix(exact=True)
+def main():
+    M = read_matrix(exact=True)
 
-print('Matrix:')
-print_matrix(M)
-
-
-nature = sol_type(M)
-print()
-print('Status:')
-match nature:
-    case Sol.NONE:
-        print('    NO solutions')
-    case Sol.UNIQUE:
-        print('    UNIQUE solution')
-    case Sol.INFINITE:
-        print('    INFINITE solutions')
+    print('Matrix:')
+    print_matrix(M)
 
 
-if nature == Sol.UNIQUE:
-    sol = linsolve(M)
+    nature = sol_type(M)
     print()
-    print('Solution:')
-    print('    (', *sol, ')')
+    print('Status:')
+    match nature:
+        case Sol.NONE:
+            print('    NO solutions')
+        case Sol.UNIQUE:
+            print('    UNIQUE solution')
+        case Sol.INFINITE:
+            print('    INFINITE solutions')
 
-if nature == Sol.INFINITE:
-    sol = linsolve(M)
+
+    if nature == Sol.UNIQUE:
+        sol = linsolve(M)
+        print()
+        print('Solution:')
+        print('    (', *sol, ')')
+
+    if nature == Sol.INFINITE:
+        sol = linsolve(M)
+        print()
+        print('One solution:')
+        print('    (', *sol, ')')
+
+
     print()
-    print('One solution:')
-    print('    (', *sol, ')')
-
-
-print()
-print('RREF:')
-print_matrix(rref(M))
+    print('RREF:')
+    print_matrix(rref(M))
